@@ -81,6 +81,14 @@ def get_filters():
     print('-'*40)
     return city, month, day
 
+def get_city_data(city):
+    """Reads the CSV file and returns a DataFrame."""
+    try:
+        df = pd.read_csv(CITY_DATA[city])
+    except FileNotFoundError:
+        print("Error: The file '{}' was not found.",CITY_DATA[city])
+        return None
+    return df
 
 def load_data(city, month, day):
     """
@@ -93,7 +101,7 @@ def load_data(city, month, day):
     Returns:
         df - Pandas DataFrame containing city data filtered by month and day
     """
-    df = pd.read_csv(CITY_DATA[city])
+    df = get_city_data(city)
     # Convert the Start Time column to datetime
     df['Start Time'] = pd.to_datetime(df['Start Time'])
     df['End Time'] = pd.to_datetime(df['End Time'])
