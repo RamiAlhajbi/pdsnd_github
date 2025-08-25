@@ -15,3 +15,7 @@ These files were used as the project database: Chicago.cvs, New_York_City.cvs, a
 ### Credits
 Thanks for _Udacity_. The project was generated during the python traning project.
 
+### Sources
+1. https://github.com/Aritra96/bikeshare-project
+2. Udacity Project Materials from the program: _Programming for Data Science with Python_
+3. Submitted Project
