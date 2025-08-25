@@ -24,6 +24,23 @@ def get_user_input( input_msg, valid_values):
     return user_input
               
 
+def ask_month():
+    """Asks user to specify a month to filter by.
+
+    Returns:
+        (str) month - name of the month to filter by.
+    """
+    
+    return get_user_input('Which month - January, February, March, April, May, or June?', ['january', 'february', 'march', 'april', 'may', 'june'])
+
+def ask_day():
+    """Asks user to specify a day of week to filter by.
+
+    Returns:
+        (str) day - name of the day of week to filter by.
+    """
+    
+    return get_user_input('Which day - Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, or Sunday', ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'])
 
 def get_filters():
     """
@@ -42,15 +59,15 @@ def get_filters():
 
     
     if filter == 'both':
-        month = get_user_input('Which month - January, February, March, April, May, or June?', ['january', 'february', 'march', 'april', 'may', 'june'])
-        day = get_user_input('Which day - Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, or Sunday', ['monday', 'tuesday', 'wednesday', 'thuresday', 'friday', 'saturday', 'sunday'])
+        month = ask_month()
+        day = ask_day()
     elif filter == 'month':
         # TO DO: get user input for month (all, january, february, ... , june)
-        month = get_user_input('Which month - January, February, March, April, May, or June?', ['january', 'february', 'march', 'april', 'may', 'june'])
+        month = ask_month()
         day = 'all'
     elif filter == 'day':
         # TO DO: get user input for day of week (all, monday, tuesday, ... sunday)
-        day = get_user_input('Which day - Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, or Sunday', ['monday', 'tuesday', 'wednesday', 'thuresday', 'friday', 'saturday', 'sunday'])
+        day = ask_day()
         month = 'all'
     else:
         # If the user chooses 'none', no filters are applied
@@ -64,6 +81,14 @@ def get_filters():
     print('-'*40)
     return city, month, day
 
+def get_city_data(city):
+    """Reads the CSV file and returns a DataFrame."""
+    try:
+        df = pd.read_csv(CITY_DATA[city])
+    except FileNotFoundError:
+        print("Error: The file '{}' was not found.",CITY_DATA[city])
+        return None
+    return df
 
 def load_data(city, month, day):
     """
@@ -76,7 +101,7 @@ def load_data(city, month, day):
     Returns:
         df - Pandas DataFrame containing city data filtered by month and day
     """
-    df = pd.read_csv(CITY_DATA[city])
+    df = get_city_data(city)
     # Convert the Start Time column to datetime
     df['Start Time'] = pd.to_datetime(df['Start Time'])
     df['End Time'] = pd.to_datetime(df['End Time'])
