@@ -24,6 +24,14 @@ def get_user_input( input_msg, valid_values):
     return user_input
               
 
+def ask_month():
+    """Asks user to specify a month to filter by.
+
+    Returns:
+        (str) month - name of the month to filter by.
+    """
+    
+    return get_user_input('Which month - January, February, March, April, May, or June?', ['january', 'february', 'march', 'april', 'may', 'june'])
 
 def get_filters():
     """
@@ -42,11 +50,11 @@ def get_filters():
 
     
     if filter == 'both':
-        month = get_user_input('Which month - January, February, March, April, May, or June?', ['january', 'february', 'march', 'april', 'may', 'june'])
+        month = ask_month()
         day = get_user_input('Which day - Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, or Sunday', ['monday', 'tuesday', 'wednesday', 'thuresday', 'friday', 'saturday', 'sunday'])
     elif filter == 'month':
         # TO DO: get user input for month (all, january, february, ... , june)
-        month = get_user_input('Which month - January, February, March, April, May, or June?', ['january', 'february', 'march', 'april', 'may', 'june'])
+        month = ask_month()
         day = 'all'
     elif filter == 'day':
         # TO DO: get user input for day of week (all, monday, tuesday, ... sunday)
